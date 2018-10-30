@@ -1,0 +1,2 @@
+Main-Class: audiotagging.AudioTagging
+Class-Path: lib/gson-2.3.1.jar lib/jaudiotagger-2.2.3.jar

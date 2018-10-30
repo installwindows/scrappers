@@ -1,0 +1,10 @@
+#!/bin/zsh
+download_dir=/home/var/Downloads
+music_dir=/home/var/Music/
+inotifywait -m $download_dir -e create |
+	while read path action file; do
+		if [[ "$file" == "please_read_me_senpai.json" ]]; then
+			/usr/bin/java -jar AudioTagging.jar $path$file $music_dir
+			/bin/rm $path$file
+		fi
+	done #&> /dev/null &
