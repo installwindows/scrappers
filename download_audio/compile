@@ -1,4 +1,5 @@
 #!/bin/sh
+export PATH=/opt/jdk1.8.0_221/bin/:$PATH
 mkdir bin
 javac -d bin -sourcepath src -cp lib/gson-2.3.1.jar:lib/jaudiotagger-2.2.3.jar src/*
 jar cvfm AudioTagging.jar manifest.txt -C bin audiotagging

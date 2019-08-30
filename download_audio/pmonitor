@@ -4,7 +4,7 @@ music_dir=/home/var/Music/
 inotifywait -m $download_dir -e create |
 	while read path action file; do
 		if [[ "$file" == "please_read_me_senpai.json" ]]; then
-			/usr/bin/java -jar AudioTagging.jar $path$file $music_dir
+            /opt/jre1.8.0_221/bin/java -jar AudioTagging.jar $path$file $music_dir
 			/bin/rm $path$file
 		fi
 	done #&> /dev/null &

@@ -8,6 +8,12 @@
 // @grant        none
 // ==/UserScript==
 
+const title_selector = "div.Marquee__wrapper__content";
+const artist_selector = "a.NowPlayingTopInfo__current__artistName.NowPlayingTopInfo__current__artistName--link";
+const album_selector = "a.nowPlayingTopInfo__current__albumName.nowPlayingTopInfo__current__link";
+const lyrics_selector = "div.Lyrics__lyrics__wrapper";
+const artwork_selector = "div.nowPlayingTopInfo__artContainer__art";
+
 function dw_set_button_audio(current_audio) {
     var button = document.getElementById('dw_button');
 
@@ -27,15 +33,14 @@ function dw_set_button_audio(current_audio) {
 function dw_get_button_audio() {
     var button = document.getElementById('dw_button');
 
-    if (button == undefined)
-        return undefined;
-    var data = button.getAttribute('data-uri');
+    if (button) {
+        var data = button.getAttribute('data-uri');
 
-    if (data != undefined) {
-        return JSON.parse(data);
+        if (data) {
+            return JSON.parse(data);
+        }
     }
-    else
-        return undefined;
+    return undefined;
 }
 
 function check_audio() {
@@ -43,19 +48,19 @@ function check_audio() {
     var last_audio = audio_tags[audio_tags.length - 1];
     var current_audio = dw_get_button_audio();
 //console.log((current_audio == undefined || current_audio.url != last_audio.getAttribute('src')) && document.querySelector('div.nowPlayingTopInfo__current') != undefined);
-    if ((current_audio == undefined || current_audio.tracks[0].url != last_audio.getAttribute('src')) && document.querySelector('div.nowPlayingTopInfo__current') != undefined)
+    if ((!current_audio || current_audio.tracks[0].url != last_audio.getAttribute('src')) && document.querySelector('div.nowPlayingTopInfo__current'))
     {
-        var lyrics_more = document.querySelector('button.Lyrics__divider__button');
-        if (lyrics_more)
-            lyrics_more.click();
+        // var lyrics_more = document.querySelector('button.Lyrics__divider__button');
+        // if (lyrics_more)
+        //     lyrics_more.click();
         //Wait the "click"
         setTimeout(function() {
-            var song_title = document.querySelector('div.Marquee__wrapper__content');
-            var artist = document.querySelector('a.nowPlayingTopInfo__current__artistName');
-            var album = document.querySelector('a.nowPlayingTopInfo__current__albumName');
+            var song_title = document.querySelector(title_selector);
+            var artist = document.querySelector(artist_selector);
+            var album = document.querySelector(album_selector);
 
-            var lyrics = document.querySelector('div.Lyrics__lyrics__wrapper');
-            var artwork = document.querySelector('div.nowPlayingTopInfo__artContainer__art');
+            var lyrics = document.querySelector(lyrics_selector);
+            var artwork = document.querySelector(artwork_selector);
             var url = last_audio.getAttribute('src');
 
             var new_audio = {};
