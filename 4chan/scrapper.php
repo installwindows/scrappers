@@ -1,5 +1,7 @@
 <?php
 
+$MAIN_DIR = "/home/var/projects/scrappers/4chan/pics/";
+
 function get_board_urls($url)
 {
 	$board = new StdClass();
@@ -25,10 +27,13 @@ function duplicate_check($md5, $jd)
 
 function get_images($url)
 {
+    global $MAIN_DIR;
 	$board = get_board_urls($url);
 	$json_string = file_get_contents($board->json_url);
 	$json = json_decode($json_string);
 	$dir = $board->thread_id . "/";
+    if ($MAIN_DIR)
+        $dir = $MAIN_DIR;
 	mkdir($dir);
 	file_put_contents($dir . $board->thread_id . ".json", $json_string);
 	$n = 0;
